@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Functions</title>
+</head>
+<body>
+    <h1>User Management</h1>
+    <button id="loadUsersBtn">Load Users</button>
+    <button id="loadUserByIdBtn">Load User by ID</button>
+    <input type="number" id="userIdInput" placeholder="Enter user ID" min="1" />
+    <pre id="output"></pre>
+
+    <script>                
+        function getUser() {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve([
+                        { id: 1, name: "John", age: 25 },
+                        { id: 2, name: "Emily", age: 30 },
+                        { id: 3, name: "Micheal", age: 20 }
+                    ]);
+                }, 5000);
+            });
+        }
+        function getUserByID(id) {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    const users = [
+                        { id: 1, name: "John", age: 25 },
+                        { id: 2, name: "Emily", age: 30 },
+                        { id: 3, name: "Micheal", age: 20 }
+                    ];
+                    const user = users.find(user => user.id === id);
+                    if (user) {
+                        resolve(user);
+                    } else {
+                        reject(`User with ID ${id} not found.`);
+                    }
+                }, 7000);
+            });
+        }
+        document.getElementById('loadUsersBtn').addEventListener('click', async () => {
+            const outputElement = document.getElementById('output');
+            outputElement.textContent = 'Loading users...';
+            try {
+                const users = await getUser();
+                outputElement.textContent = JSON.stringify(users, null, 2);
+            } catch (error) {
+                outputElement.textContent = `Error: ${error}`;
+            }
+        });
+
+        document.getElementById('loadUserByIdBtn').addEventListener('click', async () => {
+            const userId = parseInt(document.getElementById('userIdInput').value, 10);
+            const outputElement = document.getElementById('output');
+            outputElement.textContent = 'Loading user...';
+            try {
+                const user = await getUserByID(userId);
+                outputElement.textContent = JSON.stringify(user, null, 2);
+            } catch (error) {
+                outputElement.textContent = `Error: ${error}`;
+            }
+        });
+    </script>
+</body>
+</html>

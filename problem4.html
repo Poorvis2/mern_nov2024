@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Square of Each Element</title>
+    <script>
+        function calculateSquares() {
+            // Get the value from the input field
+            const input = document.getElementById('numberArray').value;
+            // Convert the input string to an array of numbers
+            const numbers = input.split(',').map(num => parseFloat(num.trim())).filter(num => !isNaN(num));
+            
+            // Create an object to store the squares
+            const squaresObject = {};
+            
+            // Iterate over each number and calculate its square
+            numbers.forEach(num => {
+                squaresObject[num] = num * num;
+            });
+
+            // Display the result
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = JSON.stringify(squaresObject, null, 2);
+        }
+    </script>
+</head>
+<body>
+
+<h1>Square of Each Element</h1>
+<p>Enter a comma-separated list of numbers:</p>
+<input type="text" id="numberArray" placeholder="e.g. 1, 2, 3, 4" />
+<button onclick="calculateSquares()">Calculate Squares</button>
+
+<h2>Result:</h2>
+<pre id="result"></pre>
+
+</body>
+</html>
